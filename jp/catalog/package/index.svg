@@ -82,7 +82,37 @@
   document.writeln = function() { document.write(Array.prototype.join.call(arguments, "") + "\n"); };
 })();;
 
-self.__ddxBase=new URL("../../../",location.href).href;;
+self.__ddxBase=new URL("../../../",location.href).href;
+(function() {
+  var base = new URL(self.__ddxBase);
+  function svgTarget(target) {
+    var url = new URL(target, location.href);
+    if (url.origin !== base.origin) return null;
+    var path = url.pathname.indexOf(base.pathname) === 0 ? url.pathname.slice(base.pathname.length) : url.pathname.slice(1);
+    path = path.replace(/\/index\.(?:html|svg)$/, '').replace(/\/$/, '');
+    if (path && !/^(?:en_US|jp)(?:\/[^.]*)?$/.test(path)) return null;
+    var result = new URL((path ? path + '/' : '') + 'index.svg', base);
+    result.search = url.search; result.hash = url.hash;
+    return result;
+  }
+  document.addEventListener('astro:before-preparation', function(event) {
+    if (!event.to || event.formData) return;
+    var target = svgTarget(event.to.href);
+    if (!target) return;
+    // Astro's cancellation fallback uses its original URL object, not a
+    // replacement event.to. Mutate in place before requesting a full load.
+    event.to.href = target.href;
+    event.preventDefault();
+  });
+  document.addEventListener('click', function(event) {
+    var anchor = event.target.closest && event.target.closest('a[href]');
+    if (!anchor || anchor.hasAttribute('download')) return;
+    var href = anchor.getAttribute('href');
+    if (!href || href.charAt(0) === '#') return;
+    var target = svgTarget(href);
+    if (target) anchor.setAttribute('href', target.href);
+  }, true);
+})();;
 
 window.FONT_OBFUSCATION_CONFIG = {
         enabled: true,
