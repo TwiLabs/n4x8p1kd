@@ -33,7 +33,7 @@ self.__ddxBase=new URL("../../../",location.href).href;;
       s.setAttribute("type", "module");
       s.setAttribute("src", m.src);
       if (m.co) s.setAttribute("crossorigin", "");
-      s.onload = function() { if (--remaining === 0) d.dispatchEvent(new Event("DOMContentLoaded")); };
+      s.onload = s.onerror = function() { s.onload = s.onerror = null; if (--remaining === 0) d.dispatchEvent(new Event("DOMContentLoaded")); };
       b.appendChild(s);
     });
   }
