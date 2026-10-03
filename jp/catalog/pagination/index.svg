@@ -27,14 +27,13 @@ self.__ddxBase=new URL("../../../",location.href).href;;
 
   function loadModules() {
     var mods = [{"src":"../../../_astro/pagination.astro_astro_type_script_index_0_lang.DDrzy_ae.js","co":false}];
-    mods.forEach(function(m, i) {
+    var remaining = mods.length;
+    mods.forEach(function(m) {
       var s = d.createElementNS(ns, "script");
       s.setAttribute("type", "module");
       s.setAttribute("src", m.src);
       if (m.co) s.setAttribute("crossorigin", "");
-      if (i === mods.length - 1) {
-        s.onload = function() { d.dispatchEvent(new Event("DOMContentLoaded")); };
-      }
+      s.onload = function() { if (--remaining === 0) d.dispatchEvent(new Event("DOMContentLoaded")); };
       b.appendChild(s);
     });
   }
