@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg"><foreignObject width="100%" height="100%" x="0" y="0"><div xmlns="http://www.w3.org/1999/xhtml" style="position:relative;width:100%;height:100%;margin:0;overflow:hidden;background:#101018;color:#fff;font:16px sans-serif"><iframe xmlns="http://www.w3.org/1999/xhtml" id="app-frame" style="display:block;border:0;width:100%;height:100%" title="Nebula"/><div xmlns="http://www.w3.org/1999/xhtml" id="status" role="status" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">Loading Nebula…</div></div></foreignObject><script><![CDATA[
+    (function () {
+      var frame = document.getElementById('app-frame');
+      var status = document.getElementById('status');
+      var saved = null;
+      try { saved = localStorage.getItem('nebula||selectedLanguage'); } catch (_) { /* storage may be disabled */ }
+      var locale = saved === 'jp' || saved === 'en_US'
+        ? saved
+        : /^ja/i.test(navigator.language || '') ? 'jp' : 'en_US';
+      status.textContent = 'Loading Nebula…';
+      function showError() {
+        status.textContent = 'Unable to load Nebula. Please reload this page.';
+        status.style.display = 'flex';
+      }
+      var loadingTimeout = setTimeout(showError, 15000);
+      frame.addEventListener('load', function () {
+        clearTimeout(loadingTimeout);
+        try {
+          var child = frame.contentDocument;
+          var stylesheet = child && child.getElementById('stylesheet');
+          if (!stylesheet || stylesheet.tagName !== 'LINK' || stylesheet.rel !== 'stylesheet') { showError(); return; }
+          status.style.display = 'none';
+        } catch (_) { showError(); }
+      });
+      frame.addEventListener('error', function () {
+        clearTimeout(loadingTimeout);
+        showError();
+      });
+      frame.setAttribute('src', locale === 'jp' ? '/jp/' : '/en_US/');
+    })();
+  ]]></script></svg>

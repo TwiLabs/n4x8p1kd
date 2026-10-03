@@ -1,0 +1,12 @@
+import{c as g,a as d}from"./catalogFetch.BFbicsP9.js";import{E as p}from"./events.tQB_qcWR.js";import"./marketplace.DBkmfAPA.js";import"./index.BDGy3wOt.js";import"./values.m6v1tuhM.js";const r=o=>String(o??"").replace(/[&<>"']/g,t=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[t]),m=()=>{const o=parseInt(new URLSearchParams(location.search).get("page")||"1");return Number.isFinite(o)&&o>0?o:1},u=(o,t)=>{const a=document.getElementById("catalog-cards"),s=Object.keys(t||{});if(s.length===0){a.textContent="No packages found.";return}a.classList.remove("p-10"),a.innerHTML=`<div class="flex flex-row gap-6 flex-wrap justify-center">${s.map(n=>{const e=t[n],c=e.type==="plugin-page"||e.type==="plugin-sw"?"plugin":e.type,l=(e.tags||[]).map(i=>`<p class="bg-navbar-text-color text-navbar-color font-bold px-3 py-1 rounded-md text-center">${r(i)}</p>`).join("");return`<a href="/${r(o)}/catalog/package/?pkg=${encodeURIComponent(n)}">
+          <div class="bg-navbar-color w-64 rounded-3xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 text-text-color">
+            <img data-catalog-src="${r(`/packages/${n}/${e.image}`)}" alt="${r(e.title)}" class="w-full h-40 object-cover bg-navbar-text-color/10" />
+            <div class="p-6 text-sm">
+              <p class="font-semibold text-2xl mb-2">${r(e.title)}</p>
+              <p class="mb-4">${r(e.description)}</p>
+              <div class="flex flex-wrap gap-2 mb-4 w-full">${l}</div>
+              <p><strong>Version: </strong>${r(e.version)}</p>
+              <p><strong>Type: </strong>${r(c)}</p>
+            </div>
+          </div>
+        </a>`}).join("")}</div>`,d(a)},f=(o,t,a)=>{const s=document.getElementById("catalog-pagination"),n=(c,l,i=!1)=>`<a href="/${r(o)}/catalog/?page=${c}" class="w-8 h-8 ${i?"bg-lighter":"bg-navbar-color"} items-center text-center content-center text-text-color rounded-md">${r(l)}</a>`,e=[];t>2&&e.push(n(1,"1")),t-1>0&&e.push(n(t-1,String(t-1))),e.push(n(t,String(t),!0)),t+1<a&&e.push(n(t+1,String(t+1))),t!==a&&a>0&&e.push(n(a,String(a))),s.innerHTML=e.join("")},v=async()=>{const o=document.getElementById("catalog-cards");if(!o)return;const t=o.getAttribute("data-lang")||"en_US",a=m();try{const n=await(await g(`/api/catalog-assets?page=${a}`)).json();u(t,n.assets||{}),f(t,a,parseInt(n.pages)||1)}catch(s){o.textContent="Failed to load the catalog.",console.error("[catalog] load failed",s)}};new p({events:{"astro:page-load":v},logging:!1}).bind();

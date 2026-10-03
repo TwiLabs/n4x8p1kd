@@ -1,0 +1,1 @@
+self.__catalogOrigin="https://nebulaproxy.io";
