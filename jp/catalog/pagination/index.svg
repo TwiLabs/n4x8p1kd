@@ -90,7 +90,7 @@ self.__ddxBase=new URL("../../../",location.href).href;
   var b = d.querySelector("body");
 
   function loadModules() {
-    var mods = [{"src":"../../../_astro/pagination.astro_astro_type_script_index_0_lang.DDrzy_ae.js","co":false}];
+    var mods = [{"src":"../../../_astro/pagination.astro_astro_type_script_index_0_lang.ZofOYQXW.js","co":false}];
     var remaining = mods.length;
     mods.forEach(function(m) {
       var s = d.createElementNS(ns, "script");

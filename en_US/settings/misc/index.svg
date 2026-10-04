@@ -128,7 +128,7 @@ window.FONT_OBFUSCATION_CONFIG = {
   var b = d.querySelector("body");
 
   function loadModules() {
-    var mods = [{"src":"../../../_astro/Loader.astro_astro_type_script_index_0_lang.DCIyc_JP.js","co":false},{"src":"../../../_astro/ClientRouter.astro_astro_type_script_index_0_lang.DcSP9LZ1.js","co":false},{"src":"../../../_astro/misc.astro_astro_type_script_index_0_lang.BK96nkyG.js","co":false},{"src":"../../../_astro/MobileNavigation.astro_astro_type_script_index_0_lang.Z8F_7CHv.js","co":false}];
+    var mods = [{"src":"../../../_astro/Loader.astro_astro_type_script_index_0_lang.BqUUA1aV.js","co":false},{"src":"../../../_astro/ClientRouter.astro_astro_type_script_index_0_lang.DcRSJWJU.js","co":false},{"src":"../../../_astro/misc.astro_astro_type_script_index_0_lang.DImI1F7s.js","co":false},{"src":"../../../_astro/MobileNavigation.astro_astro_type_script_index_0_lang.BBGjR7Ia.js","co":false}];
     var remaining = mods.length;
     mods.forEach(function(m) {
       var s = d.createElementNS(ns, "script");
